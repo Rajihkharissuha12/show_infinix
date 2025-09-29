@@ -188,13 +188,14 @@ export default function ClientHome({
   const activeSessionIdRef = useRef<string | null>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const SOCKET_URL = useMemo(() => {
-    if (typeof window === "undefined")
-      return "https://api-show-nine.vercel.app";
-    return (
-      process.env.NEXT_PUBLIC_SOCKET_URL || "https://api-show-nine.vercel.app"
-    );
-  }, []);
+  const SOCKET_URL = useMemo(
+    () =>
+      (typeof window !== "undefined"
+        ? process.env.NEXT_PUBLIC_SOCKET_URL
+        : process.env.NEXT_PUBLIC_SOCKET_URL) ||
+      "https://api-show-nine.vercel.app",
+    []
+  );
 
   const safeClearTimeout = (ref: React.MutableRefObject<number | null>) => {
     if (ref.current) {
