@@ -190,9 +190,9 @@ export default function ClientHome({
 
   const SOCKET_URL = useMemo(() => {
     if (typeof window === "undefined")
-      return "https://api-show-nine.vercel.app/";
+      return "https://api-show-nine.vercel.app";
     return (
-      process.env.NEXT_PUBLIC_SOCKET_URL || "https://api-show-nine.vercel.app/"
+      process.env.NEXT_PUBLIC_SOCKET_URL || "https://api-show-nine.vercel.app"
     );
   }, []);
 
