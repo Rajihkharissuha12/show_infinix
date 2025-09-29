@@ -1239,8 +1239,11 @@ export default function FruitLandingPage() {
   const imageRef = useRef<HTMLImageElement>(null);
 
   const SOCKET_URL = useMemo(() => {
-    if (typeof window === "undefined") return "http://localhost:4000";
-    return process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000";
+    if (typeof window === "undefined")
+      return "https://api-show-nine.vercel.app/";
+    return (
+      process.env.NEXT_PUBLIC_SOCKET_URL || "https://api-show-nine.vercel.app/"
+    );
   }, []);
 
   const safeClearTimeout = (ref: React.MutableRefObject<number | null>) => {

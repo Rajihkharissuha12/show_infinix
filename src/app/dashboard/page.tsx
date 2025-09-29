@@ -182,8 +182,9 @@ export default function QRScannerDashboard() {
   useEffect(() => {
     const SOCKET_URL =
       typeof window !== "undefined"
-        ? process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:4000"
-        : "http://localhost:4000";
+        ? process.env.NEXT_PUBLIC_SOCKET_URL ||
+          "https://api-show-nine.vercel.app/"
+        : "https://api-show-nine.vercel.app/";
 
     // Satu koneksi per mount
     const socketInstance = io(SOCKET_URL, {
