@@ -756,19 +756,19 @@ export default function QRScannerDashboard() {
       };
 
       // Cetak langsung
-      // pdfMake.createPdf(dd).print();
-      pdfMake.createPdf(dd).getBlob(function (blob: any) {
-        const url = URL.createObjectURL(blob);
-        const iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        iframe.src = url;
-        document.body.appendChild(iframe);
-        iframe.onload = function () {
-          if (iframe.contentWindow) {
-            iframe.contentWindow.print();
-          }
-        };
-      });
+      pdfMake.createPdf(dd).open();
+      // pdfMake.createPdf(dd).getBlob(function (blob: any) {
+      //   const url = URL.createObjectURL(blob);
+      //   const iframe = document.createElement("iframe");
+      //   iframe.style.display = "none";
+      //   iframe.src = url;
+      //   document.body.appendChild(iframe);
+      //   iframe.onload = function () {
+      //     if (iframe.contentWindow) {
+      //       iframe.contentWindow.print();
+      //     }
+      //   };
+      // });
     }
   };
 
