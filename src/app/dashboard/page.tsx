@@ -756,7 +756,7 @@ export default function QRScannerDashboard() {
       };
 
       // Cetak langsung
-      pdfMake.createPdf(dd).open();
+      // pdfMake.createPdf(dd).open();
       // pdfMake.createPdf(dd).getBlob(function (blob: any) {
       //   const url = URL.createObjectURL(blob);
       //   const iframe = document.createElement("iframe");
@@ -769,6 +769,52 @@ export default function QRScannerDashboard() {
       //     }
       //   };
       // });
+      let iframe = document.getElementById(
+        "pdfFrame"
+      ) as HTMLIFrameElement | null;
+      pdfMake.createPdf(dd).getBlob((blob: Blob) => {
+        const url = URL.createObjectURL(blob);
+        iframe!.src = url;
+
+        // Coba auto-print setelah konten termuat
+        const tryPrint = () => {
+          try {
+            // Fokus ke window utama dan panggil print
+            window.focus();
+            window.print();
+          } catch {
+            // Abaikan; iOS kemungkinan menolak auto-print
+          }
+        };
+
+        // Safari iOS kadang tidak memicu onload pada iframe untuk PDF
+        // Tetap coba dengan timeout kecil sebagai fallback
+        iframe!.onload = () => setTimeout(tryPrint, 300);
+
+        // Tambahan fallback: jika 1 detik tidak muncul dialog, tampilkan tombol manual
+        setTimeout(() => {
+          // Periksa heuristik: jika userAgent iOS, biasanya butuh manual
+          const isiOS =
+            /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+          if (isiOS) {
+            // Tampilkan UI tombol print manual pada halaman
+            const btnId = "btnManualPrint";
+            if (!document.getElementById(btnId)) {
+              const btn = document.createElement("button");
+              btn.id = btnId;
+              btn.textContent = "Cetak";
+              btn.style.position = "fixed";
+              btn.style.bottom = "16px";
+              btn.style.right = "16px";
+              btn.style.zIndex = "9999";
+              btn.onclick = () => window.print();
+              document.body.appendChild(btn);
+            }
+          }
+        }, 1000);
+      });
     }
   };
 
