@@ -193,7 +193,7 @@ export default function ClientHome({
       (typeof window !== "undefined"
         ? process.env.NEXT_PUBLIC_SOCKET_URL
         : process.env.NEXT_PUBLIC_SOCKET_URL) ||
-      "https://api-show-nine.vercel.app",
+      "https://986d3bd6f6ce.ngrok-free.app",
     []
   );
 
